@@ -21,8 +21,6 @@
     	The output o_valid indicates there is a valid data output. 
 */
 
-`include "fft.sv"
-
 module fft_16_4 #(
   int INPUT_WIDTH = 8,
   int OUTPUT_WIDTH = INPUT_WIDTH + 4

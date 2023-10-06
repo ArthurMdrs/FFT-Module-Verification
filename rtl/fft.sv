@@ -4,8 +4,6 @@
     be a power of 2. WIDTH is the width of the numbers. 
 */
 
-`include "butterfly.sv"
-
 module fft #(
   int N = 4, // Must be a power of 2
   int WIDTH = 12
