@@ -4,6 +4,7 @@ class fft_16_4_in_driver extends uvm_driver #(fft_16_4_in_packet);
 
     fft_16_4_in_vif vif;
     int num_sent;
+    logic signed [7:0] data_to_send[4][2];
 
     function new(string name, uvm_component parent);
         super.new(name, parent);
@@ -27,6 +28,7 @@ class fft_16_4_in_driver extends uvm_driver #(fft_16_4_in_packet);
     endtask: run_phase
 
     task get_and_drive();
+
         @(negedge vif.rst_sync_n);
         @(posedge vif.rst_sync_n);
 
@@ -41,8 +43,18 @@ class fft_16_4_in_driver extends uvm_driver #(fft_16_4_in_packet);
             fork
                 // send packet
                 begin
+
+                    data_to_send[0][0] = req.i_data_1_real;
+                    data_to_send[0][1] = req.i_data_1_imag;
+                    data_to_send[1][0] = req.i_data_2_real;
+                    data_to_send[1][1] = req.i_data_2_imag;
+                    data_to_send[2][0] = req.i_data_3_real;
+                    data_to_send[2][1] = req.i_data_3_imag;
+                    data_to_send[3][0] = req.i_data_4_real;
+                    data_to_send[3][1] = req.i_data_4_imag;
+
                     // send packet via interface
-                    vif.send_to_dut(req);
+                    vif.send_to_dut(data_to_send);
                 end
 
                 // Start transaction recording at start of packet (vif.drvstart triggered from interface.send_to_dut())

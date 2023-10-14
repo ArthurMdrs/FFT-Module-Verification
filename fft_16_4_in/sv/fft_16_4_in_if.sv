@@ -14,46 +14,58 @@
         
         // Signal to control monitor activity
         bit got_packet;
-        // Test packet
-        fft_16_4_in_packet pkt = new("PKT");
+
+        // Variables used in the fixed point handling
+        int frac_part = 7;
+        real scale = 2.0**(-frac_part);
 
         task fft_16_4_in_reset();
             @(negedge rst_sync_n);
             monstart = 0;
             drvstart = 0;
+            foreach (i_data[i])
+                i_data[i] = {'x, 'x};
+            i_valid = 0;
             disable send_to_dut;
         endtask
 
         // Gets a packet and drive it into the DUT
-        task send_to_dut(fft_16_4_in_packet req);
+        task send_to_dut(input logic signed [INPUT_WIDTH-1:0] data[4][2]);
             // Logic to start recording transaction
             @(negedge clk);
-
             // trigger for transaction recording
             drvstart = 1'b1;
+            
+            i_data = data;
+            i_valid = 1;
 
-            // Drive logic 
-            pkt.copy(req);
-            `uvm_info("FFT_16_4_IN INTERFACE", $sformatf("Driving packet to DUT:%s", pkt.convert2string()), UVM_HIGH)
+            // $display("[SEND] Values in fixed point are:");
+            // foreach (i_data[i])
+            //     $display ("i_data[%0d] = %f + %fj", i, i_data[i][0]*scale, i_data[i][1]*scale);
+
             got_packet = 1'b1;
             @(negedge clk);
+            i_valid = 0;
 
             // Reset trigger
             drvstart = 1'b0;
         endtask : send_to_dut
 
         // Collect Packets
-        task collect_packet(fft_16_4_in_packet req);
+        task collect_packet(output logic signed [INPUT_WIDTH-1:0] data[4][2]);
             // Logic to start recording transaction
             @(posedge clk iff got_packet);
-            got_packet = 1'b0;
-            
+            got_packet = 1'b0;            
             // trigger for transaction recording
             monstart = 1'b1;
 
-            // Collect logic 
-            req.copy(pkt);
-            `uvm_info("FFT_16_4_IN INTERFACE", $sformatf("Collected packet:%s", req.convert2string()), UVM_HIGH)
+            // Collect logic
+            data = i_data;
+
+            // $display("[COLLECT] Values in fixed point are:");
+            // foreach (i_data[i])
+            //     $display ("i_data[%0d] = %f + %fj", i, i_data[i][0]*scale, i_data[i][1]*scale);
+
             @(posedge clk);
 
             // Reset trigger

@@ -17,7 +17,7 @@ class base_test extends uvm_test;
         super.build_phase(phase);
 
         // Edit to set some agent to passive
-        // uvm_config_db#(int)::set(this, "agent_fft_16_4_out", "is_active", UVM_PASSIVE);
+        uvm_config_db#(int)::set(this, "agent_fft_16_4_out", "is_active", UVM_PASSIVE);
 
         // Edit to disable some agent's coverage
         // uvm_config_db#(int)::set(this, "some_vip", "cov_control", COV_DISABLE);

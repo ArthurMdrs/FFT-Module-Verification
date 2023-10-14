@@ -1,9 +1,13 @@
+INCLUDES 		= /usr/include/python3.6m/
+INCLUDE_CONFIG 	= /usr/include/python3.6m/config-3.6m
+
 RTL = ./test_DPI.sv 
 
 run: all
 
 all:
-	g++ -g -fPIC -Wall -std=c++0x cpp_function.cpp -shared -o test.so
+	g++ -g -fPIC -Wall -std=c++0x cpp_function.cpp -I ${INCLUDES} \
+		-shared -o test.so
 	xrun $(RTL) -sv_lib test.so -access +rwc -64bit -sv -timescale 1ns/1ps -dpi -dpiheader \
 		dpi_header.txt -dpiimpheader dpi_imp_header.txt 
 	

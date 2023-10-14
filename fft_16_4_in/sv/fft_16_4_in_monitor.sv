@@ -5,6 +5,7 @@ class fft_16_4_in_monitor extends uvm_monitor;
     fft_16_4_in_vif vif;
     fft_16_4_in_packet pkt;
     int num_pkt_col;
+    logic signed [7:0] data_sent[4][2];
 
     uvm_analysis_port #(fft_16_4_in_packet) item_collected_port;
 
@@ -37,7 +38,16 @@ class fft_16_4_in_monitor extends uvm_monitor;
                 // collect packet
                 begin
                     // collect packet from interface
-                    vif.collect_packet(pkt);
+                    vif.collect_packet(data_sent);
+                    
+                    pkt.i_data_1_real = {'0, data_sent[0][0]};
+                    pkt.i_data_1_imag = {'0, data_sent[0][1]};
+                    pkt.i_data_2_real = {'0, data_sent[1][0]};
+                    pkt.i_data_2_imag = {'0, data_sent[1][1]};
+                    pkt.i_data_3_real = {'0, data_sent[2][0]};
+                    pkt.i_data_3_imag = {'0, data_sent[2][1]};
+                    pkt.i_data_4_real = {'0, data_sent[3][0]};
+                    pkt.i_data_4_imag = {'0, data_sent[3][1]};
                 end
 
                 // Start transaction recording at start of packet (vif.monstart triggered from interface.collect_packet())

@@ -8,7 +8,7 @@
 
 // UVM options
     -uvmhome $UVMHOME
-    +UVM_VERBOSITY=UVM_LOW
+    +UVM_VERBOSITY=UVM_MEDIUM
     +UVM_NO_RELNOTES
     +UVM_TESTNAME=random_test
 
