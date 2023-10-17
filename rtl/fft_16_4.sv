@@ -59,16 +59,18 @@ module fft_16_4 #(
       k <= 0;
     end
   	// The state machine only works when i_valid = HIGH
-  	else if (i_valid)
+  	else //if (i_valid)
       case (state)
         0: begin
-          if (k == 3) state <= 1;
-          else k <= k + 1;          
-          for (int i = 0; i < 4; i++) begin
-            inputs[i+k*4][0] <= {{EXTRA_BITS{i_data[i][0][INPUT_WIDTH-1]}}, i_data[i][0]};
-            inputs[i+k*4][1] <= {{EXTRA_BITS{i_data[i][1][INPUT_WIDTH-1]}}, i_data[i][1]};
-          end          
-          o_valid <= 1'b0;
+          if (i_valid) begin
+            if (k == 3) state <= 1;
+            else k <= k + 1;          
+            for (int i = 0; i < 4; i++) begin
+              inputs[i+k*4][0] <= {{EXTRA_BITS{i_data[i][0][INPUT_WIDTH-1]}}, i_data[i][0]};
+              inputs[i+k*4][1] <= {{EXTRA_BITS{i_data[i][1][INPUT_WIDTH-1]}}, i_data[i][1]};
+            end          
+            o_valid <= 1'b0;
+          end
         end
         1: begin
           foreach (o_data[i])
@@ -81,9 +83,9 @@ module fft_16_4 #(
           k <= 0;
         end
       endcase
-  	else begin
-      k <= 0;
-      state <= 0;
-    end
+  	// else begin
+    //   k <= 0;
+    //   state <= 0;
+    // end
   
 endmodule

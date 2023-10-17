@@ -8,7 +8,7 @@
 
 // UVM options
     -uvmhome $UVMHOME
-    +UVM_VERBOSITY=UVM_MEDIUM
+    +UVM_VERBOSITY=UVM_LOW
     +UVM_NO_RELNOTES
     +UVM_TESTNAME=random_test
 
@@ -23,7 +23,7 @@
     ../fft_16_4_out/sv/fft_16_4_out_if.sv
 
 // RTL
-    //../rtl/stub.sv
+    ../rtl/*.sv
 
 // Top level
     top.sv

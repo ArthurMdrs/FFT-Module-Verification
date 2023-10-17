@@ -13,7 +13,6 @@ class fft_16_4_out_coverage extends uvm_subscriber #(fft_16_4_out_packet);
         // option.at_least = 3;
         // option.auto_bin_max = 256;
         // option.cross_auto_bin_max = 256;
-        cp_o_valid: coverpoint cov_transaction.o_valid;
         cp_o_data_1_real: coverpoint cov_transaction.o_data_1_real;
         cp_o_data_1_imag: coverpoint cov_transaction.o_data_1_imag;
         cp_o_data_2_real: coverpoint cov_transaction.o_data_2_real;

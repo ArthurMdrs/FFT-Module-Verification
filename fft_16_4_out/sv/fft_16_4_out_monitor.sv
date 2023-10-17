@@ -5,6 +5,7 @@ class fft_16_4_out_monitor extends uvm_monitor;
     fft_16_4_out_vif vif;
     fft_16_4_out_packet pkt;
     int num_pkt_col;
+    logic signed [11:0] data_received[16][2];
 
     uvm_analysis_port #(fft_16_4_out_packet) item_collected_port;
 
@@ -37,7 +38,40 @@ class fft_16_4_out_monitor extends uvm_monitor;
                 // collect packet
                 begin
                     // collect packet from interface
-                    vif.collect_packet(pkt);
+                    vif.collect_packet(data_received);
+                    
+                    pkt.o_data_1_real = data_received[0][0];
+                    pkt.o_data_1_imag = data_received[0][1];
+                    pkt.o_data_2_real = data_received[1][0];
+                    pkt.o_data_2_imag = data_received[1][1];
+                    pkt.o_data_3_real = data_received[2][0];
+                    pkt.o_data_3_imag = data_received[2][1];
+                    pkt.o_data_4_real = data_received[3][0];
+                    pkt.o_data_4_imag = data_received[3][1];
+                    pkt.o_data_5_real = data_received[4][0];
+                    pkt.o_data_5_imag = data_received[4][1];
+                    pkt.o_data_6_real = data_received[5][0];
+                    pkt.o_data_6_imag = data_received[5][1];
+                    pkt.o_data_7_real = data_received[6][0];
+                    pkt.o_data_7_imag = data_received[6][1];
+                    pkt.o_data_8_real = data_received[7][0];
+                    pkt.o_data_8_imag = data_received[7][1];
+                    pkt.o_data_9_real = data_received[8][0];
+                    pkt.o_data_9_imag = data_received[8][1];
+                    pkt.o_data_10_real = data_received[9][0];
+                    pkt.o_data_10_imag = data_received[9][1];
+                    pkt.o_data_11_real = data_received[10][0];
+                    pkt.o_data_11_imag = data_received[10][1];
+                    pkt.o_data_12_real = data_received[11][0];
+                    pkt.o_data_12_imag = data_received[11][1];
+                    pkt.o_data_13_real = data_received[12][0];
+                    pkt.o_data_13_imag = data_received[12][1];
+                    pkt.o_data_14_real = data_received[13][0];
+                    pkt.o_data_14_imag = data_received[13][1];
+                    pkt.o_data_15_real = data_received[14][0];
+                    pkt.o_data_15_imag = data_received[14][1];
+                    pkt.o_data_16_real = data_received[15][0];
+                    pkt.o_data_16_imag = data_received[15][1];
                 end
 
                 // Start transaction recording at start of packet (vif.monstart triggered from interface.collect_packet())

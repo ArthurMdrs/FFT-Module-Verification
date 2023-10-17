@@ -21,19 +21,19 @@ module top;
     // Interfaces instances - end
 
 
-    // stub dut(
-    //     .clk(clk),
-    //     .rst_sync_n(rst_sync_n),
-    //     // Signals from fft_16_4_in's interface - begin
-    //         .i_valid(if_fft_16_4_in.i_valid),
-    //         .i_data[4][2](if_fft_16_4_in.i_data[4][2]),
-    //     // Signals from fft_16_4_in's interface - end
+    fft_16_4 dut (
+        .clk(clk),
+        .rst_sync_n(rst_sync_n),
+        // Signals from fft_16_4_in's interface - begin
+            .i_valid(if_fft_16_4_in.i_valid),
+            .i_data(if_fft_16_4_in.i_data),
+        // Signals from fft_16_4_in's interface - end
 
-    //     // Signals from fft_16_4_out's interface - begin
-    //         .o_valid(if_fft_16_4_out.o_valid),
-    //         .o_data[16][2](if_fft_16_4_out.o_data[16][2])
-    //     // Signals from fft_16_4_out's interface - end
-    // );
+        // Signals from fft_16_4_out's interface - begin
+            .o_valid(if_fft_16_4_out.o_valid),
+            .o_data(if_fft_16_4_out.o_data)
+        // Signals from fft_16_4_out's interface - end
+    );
 
     initial begin
         clk = 0;

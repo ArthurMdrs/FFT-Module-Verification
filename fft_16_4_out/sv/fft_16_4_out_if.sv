@@ -14,8 +14,10 @@
         
         // Signal to control monitor activity
         bit got_packet;
-        // Test packet
-        fft_16_4_out_packet pkt = new("PKT");
+
+        // Variables used in the fixed point handling
+        int frac_part = 4;
+        real scale = 2.0**(-frac_part);        
 
         task fft_16_4_out_reset();
             @(negedge rst_sync_n);
@@ -26,35 +28,25 @@
 
         // Gets a packet and drive it into the DUT
         task send_to_dut(fft_16_4_out_packet req);
-            // Logic to start recording transaction
-            @(negedge clk);
+            
+            $display("This is an output interface! Cannot send to DUT!");
 
-            // trigger for transaction recording
-            drvstart = 1'b1;
-
-            // Drive logic 
-            pkt.copy(req);
-            `uvm_info("FFT_16_4_OUT INTERFACE", $sformatf("Driving packet to DUT:%s", pkt.convert2string()), UVM_HIGH)
-            got_packet = 1'b1;
-            @(negedge clk);
-
-            // Reset trigger
-            drvstart = 1'b0;
         endtask : send_to_dut
 
         // Collect Packets
-        task collect_packet(fft_16_4_out_packet req);
+        task collect_packet(output logic signed [OUTPUT_WIDTH-1:0] data[16][2]);
             // Logic to start recording transaction
-            @(posedge clk iff got_packet);
-            got_packet = 1'b0;
-            
+            @(negedge clk iff (o_valid && o_data !== data));
             // trigger for transaction recording
             monstart = 1'b1;
 
-            // Collect logic 
-            req.copy(pkt);
-            `uvm_info("FFT_16_4_OUT INTERFACE", $sformatf("Collected packet:%s", req.convert2string()), UVM_HIGH)
-            @(posedge clk);
+            data = o_data;
+
+            // $display("[OUT COLLECT] Values in fixed point are:");
+            // foreach (o_data[i])
+            //     $display ("o_data[%0d] = %f + %fj", i, o_data[i][0]*scale, o_data[i][1]*scale);
+
+            @(negedge clk);
 
             // Reset trigger
             monstart = 1'b0;

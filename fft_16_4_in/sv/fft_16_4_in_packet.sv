@@ -1,14 +1,23 @@
 class fft_16_4_in_packet extends uvm_sequence_item;
 
         //  bit  i_valid;
-    rand int  i_data_1_real;
-    rand int  i_data_1_imag;
-    rand int  i_data_2_real;
-    rand int  i_data_2_imag;
-    rand int  i_data_3_real;
-    rand int  i_data_3_imag;
-    rand int  i_data_4_real;
-    rand int  i_data_4_imag;
+    // rand int  i_data_1_real;
+    // rand int  i_data_1_imag;
+    // rand int  i_data_2_real;
+    // rand int  i_data_2_imag;
+    // rand int  i_data_3_real;
+    // rand int  i_data_3_imag;
+    // rand int  i_data_4_real;
+    // rand int  i_data_4_imag;
+
+    rand logic signed [7:0] i_data_1_real;
+    rand logic signed [7:0] i_data_1_imag;
+    rand logic signed [7:0] i_data_2_real;
+    rand logic signed [7:0] i_data_2_imag;
+    rand logic signed [7:0] i_data_3_real;
+    rand logic signed [7:0] i_data_3_imag;
+    rand logic signed [7:0] i_data_4_real;
+    rand logic signed [7:0] i_data_4_imag;
 
     `uvm_object_utils_begin(fft_16_4_in_packet)
         // `uvm_field_int(i_valid, UVM_ALL_ON)
@@ -27,14 +36,14 @@ class fft_16_4_in_packet extends uvm_sequence_item;
     endfunction: new
 
     // Type your constraints!
-    constraint i_data_1_real_range {i_data_1_real < 2**8; i_data_1_real >= 0;}
-    constraint i_data_1_imag_range {i_data_1_imag < 2**8; i_data_1_imag >= 0;}
-    constraint i_data_2_real_range {i_data_2_real < 2**8; i_data_2_real >= 0;}
-    constraint i_data_2_imag_range {i_data_2_imag < 2**8; i_data_2_imag >= 0;}
-    constraint i_data_3_real_range {i_data_3_real < 2**8; i_data_3_real >= 0;}
-    constraint i_data_3_imag_range {i_data_3_imag < 2**8; i_data_3_imag >= 0;}
-    constraint i_data_4_real_range {i_data_4_real < 2**8; i_data_4_real >= 0;}
-    constraint i_data_4_imag_range {i_data_4_imag < 2**8; i_data_4_imag >= 0;}
+    // constraint i_data_1_real_range {i_data_1_real < 2**8; i_data_1_real >= 0;}
+    // constraint i_data_1_imag_range {i_data_1_imag < 2**8; i_data_1_imag >= 0;}
+    // constraint i_data_2_real_range {i_data_2_real < 2**8; i_data_2_real >= 0;}
+    // constraint i_data_2_imag_range {i_data_2_imag < 2**8; i_data_2_imag >= 0;}
+    // constraint i_data_3_real_range {i_data_3_real < 2**8; i_data_3_real >= 0;}
+    // constraint i_data_3_imag_range {i_data_3_imag < 2**8; i_data_3_imag >= 0;}
+    // constraint i_data_4_real_range {i_data_4_real < 2**8; i_data_4_real >= 0;}
+    // constraint i_data_4_imag_range {i_data_4_imag < 2**8; i_data_4_imag >= 0;}
 
     function string convert2string();
         string string_aux;

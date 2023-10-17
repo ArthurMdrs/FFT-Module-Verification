@@ -62,7 +62,7 @@
             // Collect logic
             data = i_data;
 
-            // $display("[COLLECT] Values in fixed point are:");
+            // $display("[IN COLLECT] Values in fixed point are:");
             // foreach (i_data[i])
             //     $display ("i_data[%0d] = %f + %fj", i, i_data[i][0]*scale, i_data[i][1]*scale);
 

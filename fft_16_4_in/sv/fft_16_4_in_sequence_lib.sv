@@ -31,7 +31,7 @@ class fft_16_4_in_random_seq extends fft_16_4_in_base_sequence;
     endfunction: new
     
     virtual task body();
-        repeat(3) begin
+        repeat(8) begin
             `uvm_create(req)
                 void'(req.randomize());
                 // It is possible to put constraints into randomize, like below.
