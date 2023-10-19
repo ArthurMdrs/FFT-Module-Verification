@@ -15,10 +15,6 @@
         // Signal to control monitor activity
         bit got_packet;
 
-        // Variables used in the fixed point handling
-        int frac_part = 7;
-        real scale = 2.0**(-frac_part);
-
         task fft_16_4_in_reset();
             @(negedge rst_sync_n);
             monstart = 0;
@@ -39,10 +35,6 @@
             i_data = data;
             i_valid = 1;
 
-            // $display("[SEND] Values in fixed point are:");
-            // foreach (i_data[i])
-            //     $display ("i_data[%0d] = %f + %fj", i, i_data[i][0]*scale, i_data[i][1]*scale);
-
             got_packet = 1'b1;
             @(negedge clk);
             i_valid = 0;
@@ -61,10 +53,6 @@
 
             // Collect logic
             data = i_data;
-
-            // $display("[IN COLLECT] Values in fixed point are:");
-            // foreach (i_data[i])
-            //     $display ("i_data[%0d] = %f + %fj", i, i_data[i][0]*scale, i_data[i][1]*scale);
 
             @(posedge clk);
 

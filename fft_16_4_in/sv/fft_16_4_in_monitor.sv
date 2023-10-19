@@ -40,15 +40,6 @@ class fft_16_4_in_monitor extends uvm_monitor;
                     // collect packet from interface
                     vif.collect_packet(data_sent);
                     
-                    // pkt.i_data_1_real = {'0, data_sent[0][0]}; // This was used when data was int
-                    // pkt.i_data_1_imag = {'0, data_sent[0][1]};
-                    // pkt.i_data_2_real = {'0, data_sent[1][0]};
-                    // pkt.i_data_2_imag = {'0, data_sent[1][1]};
-                    // pkt.i_data_3_real = {'0, data_sent[2][0]};
-                    // pkt.i_data_3_imag = {'0, data_sent[2][1]};
-                    // pkt.i_data_4_real = {'0, data_sent[3][0]};
-                    // pkt.i_data_4_imag = {'0, data_sent[3][1]};
-                    
                     pkt.i_data_1_real = data_sent[0][0];
                     pkt.i_data_1_imag = data_sent[0][1];
                     pkt.i_data_2_real = data_sent[1][0];

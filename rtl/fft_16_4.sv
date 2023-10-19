@@ -59,7 +59,7 @@ module fft_16_4 #(
       k <= 0;
     end
   	// The state machine only works when i_valid = HIGH
-  	else //if (i_valid)
+  	else 
       case (state)
         0: begin
           if (i_valid) begin
@@ -83,9 +83,5 @@ module fft_16_4 #(
           k <= 0;
         end
       endcase
-  	// else begin
-    //   k <= 0;
-    //   state <= 0;
-    // end
   
 endmodule

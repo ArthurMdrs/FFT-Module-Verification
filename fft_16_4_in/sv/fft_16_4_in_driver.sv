@@ -43,7 +43,6 @@ class fft_16_4_in_driver extends uvm_driver #(fft_16_4_in_packet);
             fork
                 // send packet
                 begin
-
                     data_to_send[0][0] = req.i_data_1_real;
                     data_to_send[0][1] = req.i_data_1_imag;
                     data_to_send[1][0] = req.i_data_2_real;

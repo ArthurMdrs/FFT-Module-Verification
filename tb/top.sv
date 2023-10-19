@@ -8,6 +8,9 @@ module top;
         import fft_16_4_out_pkg::*;
     // VIP imports - end
 
+    `include "fft_16_4_refmod.sv"
+    `include "fft_16_4_scoreboard.sv"
+    `include "fft_16_4_tb.sv"
     `include "tests.sv"
 
     bit clk, rst_sync_n;
@@ -48,8 +51,8 @@ module top;
         $dumpvars;
 
         // Virtual interfaces send to VIPs - begin
-            fft_16_4_in_vif_config::set(null, "uvm_test_top.agent_fft_16_4_in.*", "vif", if_fft_16_4_in);
-            fft_16_4_out_vif_config::set(null, "uvm_test_top.agent_fft_16_4_out.*", "vif", if_fft_16_4_out);
+            fft_16_4_in_vif_config::set(null, "uvm_test_top.tb.agent_fft_16_4_in.*", "vif", if_fft_16_4_in);
+            fft_16_4_out_vif_config::set(null, "uvm_test_top.tb.agent_fft_16_4_out.*", "vif", if_fft_16_4_out);
         // Virtual interfaces send to VIPs - end
 
         run_test();

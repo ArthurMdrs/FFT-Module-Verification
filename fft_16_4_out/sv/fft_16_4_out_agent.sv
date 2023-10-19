@@ -42,7 +42,6 @@ class fft_16_4_out_agent extends uvm_agent;
     function void connect_phase (uvm_phase phase);
         super.connect_phase(phase);
 
-        //item_from_monitor_port.connect(monitor.item_collected_port);
         monitor.item_collected_port.connect(item_from_monitor_port);
         
         if (is_active == UVM_ACTIVE) begin

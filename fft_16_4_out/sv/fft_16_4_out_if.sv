@@ -10,14 +10,7 @@
         // Interface Signals - End
 
         // Signals for transaction recording
-        bit monstart, drvstart;
-        
-        // Signal to control monitor activity
-        bit got_packet;
-
-        // Variables used in the fixed point handling
-        int frac_part = 4;
-        real scale = 2.0**(-frac_part);        
+        bit monstart, drvstart;      
 
         task fft_16_4_out_reset();
             @(negedge rst_sync_n);
@@ -41,10 +34,6 @@
             monstart = 1'b1;
 
             data = o_data;
-
-            // $display("[OUT COLLECT] Values in fixed point are:");
-            // foreach (o_data[i])
-            //     $display ("o_data[%0d] = %f + %fj", i, o_data[i][0]*scale, o_data[i][1]*scale);
 
             @(negedge clk);
 
