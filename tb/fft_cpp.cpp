@@ -47,7 +47,7 @@ extern "C" void fft_cpp (DpiStructGEN *dpiStruct) {
 
 
 
-// https://cp-algorithms.com/algebra/fft.html
+// Based on https://cp-algorithms.com/algebra/fft.html
 void fft_aux (vector<complex_int> & P, vector<complex_int> & res) {
     int n = P.size();
     res = vector<complex_int> (n);
@@ -76,6 +76,22 @@ void fft_aux (vector<complex_int> & P, vector<complex_int> & res) {
       res[i+n/2].real = evens_o[i].real - cos(i*theta)*odds_o[i].real + sin(i*theta)*odds_o[i].imag;
       res[i+n/2].imag = evens_o[i].imag - sin(i*theta)*odds_o[i].real - cos(i*theta)*odds_o[i].imag;
     }
+
+// DEBUG BELOW!!!
+// if(n == 4) {
+//     printf("MOD n is %0d\n", n);
+//     printf("theta is %f\n", theta);
+//     // for (int i = 0; i < n/2; i++){
+//     //     printf("\ncos, sin is %0d, %0d\n", int(cos(theta*i)), int(sin(theta*i)));
+//     //     printf("theta*i is %f\n", theta*i);
+//     //     complex_int x (int(cos(theta*i)), int(sin(theta*i))), y;
+//     //     y = mult(odds_o[i], x);
+//     //     printf("w is %0d, %0d\n\n", y.real, y.imag);
+//     // }
+//     for (int i = 0; i < n; i++){
+//         printf("MOD res is %0d, %0d\n", res[i].real, res[i].imag);
+//     }
+// }
 
     return;
 }

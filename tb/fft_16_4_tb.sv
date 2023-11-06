@@ -1,3 +1,5 @@
+import cover_enable_pkg::*;
+
 class fft_16_4_tb extends uvm_env;
 
     `uvm_component_utils(fft_16_4_tb)
@@ -23,7 +25,7 @@ class fft_16_4_tb extends uvm_env;
         uvm_config_db#(int)::set(this, "agent_fft_16_4_out", "is_active", UVM_PASSIVE);
 
         // Edit to disable some agent's coverage
-        // uvm_config_db#(int)::set(this, "some_vip", "cov_control", COV_DISABLE);
+        // uvm_config_db#(int)::set(this, "agent_fft_16_4_in", "cov_control", COV_DISABLE);
 
         // VIPs creation - begin
         agent_fft_16_4_in = fft_16_4_in_agent::type_id::create("agent_fft_16_4_in", this);

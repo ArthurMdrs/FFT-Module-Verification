@@ -29,5 +29,21 @@ module butterfly #(
       out[i+N/2][1] = evens[i][1] - $sin(i*theta)*odds[i][0] - 
       				$cos(i*theta)*odds[i][1];
     end
-        
+      
+// DEBUG BELOW!!!  
+  // always @ (out) begin
+  //   if (N == 4) begin
+  //   int my_r, my_i;
+  //   $display("DUT n is %0d", N);
+  //   // $display("theta is %f", theta);
+  //   // for (int i = 0; i < N/2; i++) begin
+  //   //   my_r = $cos(i*theta)*odds[i][0] - $sin(i*theta)*odds[i][1];
+  //   //   my_i = $sin(i*theta)*odds[i][0] + $cos(i*theta)*odds[i][1];
+  //   //   $display("DUT w is %0d, %0d", my_r, my_i);
+  //   // end
+  //   for (int i = 0; i < N; i++) begin
+  //     $display("DUT res is %0d, %0d", out[i][0], out[i][1]);
+  //   end
+  //   end
+  // end
 endmodule

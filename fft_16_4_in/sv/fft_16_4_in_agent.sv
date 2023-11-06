@@ -1,4 +1,4 @@
-typedef enum bit {COV_ENABLE, COV_DISABLE} cover_e;
+import cover_enable_pkg::*;
 
 class fft_16_4_in_agent extends uvm_agent;
 
@@ -20,13 +20,16 @@ class fft_16_4_in_agent extends uvm_agent;
     function new (string name, uvm_component parent);
         super.new(name, parent);
         item_from_monitor_port = new("item_from_monitor_port", this);
-    endfunction: new
+    endfunction : new
 
     function void build_phase (uvm_phase phase);
         super.build_phase(phase);
 
         monitor       = fft_16_4_in_monitor::type_id::create("monitor", this);
         if (is_active == UVM_ACTIVE) begin
+            if (cov_control == COV_DISABLE) begin
+                uvm_config_db#(int)::set(this, "sequencer", "cov_control", COV_DISABLE);
+            end
             sequencer = fft_16_4_in_sequencer::type_id::create("sequencer", this);
             driver    = fft_16_4_in_driver::type_id::create("driver", this);
         end
@@ -37,7 +40,7 @@ class fft_16_4_in_agent extends uvm_agent;
         end else begin
             `uvm_info("FFT_16_4_IN AGENT", "Coverage is disabled." , UVM_LOW)
         end
-    endfunction: build_phase
+    endfunction : build_phase
 
     function void connect_phase (uvm_phase phase);
         super.connect_phase(phase);
@@ -50,12 +53,13 @@ class fft_16_4_in_agent extends uvm_agent;
 
         if (cov_control == COV_ENABLE) begin
             monitor.item_collected_port.connect(coverage.analysis_export);
+            sequencer.from_cov_get_port.connect(coverage.cov_to_seq_get_imp);
         end
-    endfunction: connect_phase
+    endfunction : connect_phase
 
     function void start_of_simulation_phase (uvm_phase phase);
         super.start_of_simulation_phase(phase);
         `uvm_info("FFT_16_4_IN AGENT", "Simulation initialized", UVM_HIGH)
-    endfunction: start_of_simulation_phase
+    endfunction : start_of_simulation_phase
 
-endclass: fft_16_4_in_agent
+endclass : fft_16_4_in_agent

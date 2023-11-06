@@ -7,11 +7,13 @@ class fft_16_4_in_coverage extends uvm_subscriber #(fft_16_4_in_packet);
         `uvm_field_real(coverage_value, UVM_ALL_ON)
     `uvm_component_utils_end
 
+    uvm_blocking_get_imp #(real, fft_16_4_in_coverage) cov_to_seq_get_imp;
+
     covergroup fft_16_4_in_covergroup;
         option.per_instance = 1;
         option.name = {get_full_name(), ".", "covergroup"};
-        // option.at_least = 3;
-        // option.auto_bin_max = 256;
+        option.at_least = 10;
+        option.auto_bin_max = 128;
         // option.cross_auto_bin_max = 256;
         cp_i_data_1_real: coverpoint cov_transaction.i_data_1_real;
         cp_i_data_1_imag: coverpoint cov_transaction.i_data_1_imag;
@@ -26,6 +28,7 @@ class fft_16_4_in_coverage extends uvm_subscriber #(fft_16_4_in_packet);
     function new (string name, uvm_component parent);
         super.new(name, parent);
         fft_16_4_in_covergroup = new();
+        cov_to_seq_get_imp = new("cov_to_seq_get_imp", this);
     endfunction: new
 
     function void report_phase (uvm_phase phase);
@@ -46,5 +49,9 @@ class fft_16_4_in_coverage extends uvm_subscriber #(fft_16_4_in_packet);
         sample(t); // sample coverage with this transaction
         coverage_value = get_coverage();
     endfunction : write
+
+    virtual task get (output real coverage_value);
+        coverage_value = this.coverage_value;
+    endtask
 
 endclass : fft_16_4_in_coverage

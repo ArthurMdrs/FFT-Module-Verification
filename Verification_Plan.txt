@@ -1,0 +1,39 @@
+The module fft_16_4 should correctly implement the size-16 Fast 
+Fourier Transform (FFT). The ports are described below.
+- Inputs:
+    The data inputs are complex numbers, with the element 0 being 
+the real part and the element 1 the imaginary. The module takes 4 
+samples at a time, meaning it takes 4 clock cycles to acquire the 
+full 16 samples. The input numbers are to be interpreted as fixed-
+point, with 1 integer bit (which represents the signal) and 7 
+fractional bits. So the range is [-1, 1) with a precision of 2^(-7).
+    The input i_valid indicates there is a valid data input to be
+processed.
+    clk is the clock and rst_sync_n is the reset (synchronous and
+active-low).
+-Output:
+    The data outputs are also complex numbers, with the element 0 
+being the real part and the element 1 the imaginary. The module 
+produces all 16 samples at the same time. The output numbers are to 
+be interpreted as fixed-point, with 8 integer bits (1 for the signal) 
+and 4 fractional bits. So the range is [-128, 128) with a precision of 
+2^(-4).
+    The output o_valid indicates there is a valid data output. 
+
+
+
+- Functional requirements: Calculate the FFT correctly, according to
+the reference model.
+The reference model is a function implemented in C++ and should be 
+called in the UVM reference model class.
+
+- Coverage goals: Tests should achieve 100% coverage for input 
+stimulus. The coverage is defined as follows: there are 128 automatic 
+bins evenly distributed for all possible input values. Each bin should 
+be hit 10 times.
+
+- Tests:
+. Random test: send completely random stimulus a fixed number of times.
+. Full coverage test: achieve 100% coverage.
+. Corner cases test: force inputs to be close to 0, maximum value and
+minimum value allowed by the representation.

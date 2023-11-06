@@ -1,11 +1,11 @@
 CPP_FILE = fft_cpp
 
 UVMHOME = /Tools/cadence/XCELIUM2303/tools/methodology/UVM/CDNS-1.2
-TEST = random_test
+TEST = full_cov_test
 VERBOSITY = UVM_NONE
 
 INCDIRS = -incdir ../fft_16_4_in/sv -incdir ../fft_16_4_out/sv
-PKGS = ../fft_16_4_in/sv/fft_16_4_in_pkg.sv ../fft_16_4_out/sv/fft_16_4_out_pkg.sv
+PKGS = cover_enable_pkg.sv ../fft_16_4_in/sv/fft_16_4_in_pkg.sv ../fft_16_4_out/sv/fft_16_4_out_pkg.sv
 IFS = ../fft_16_4_in/sv/fft_16_4_in_if.sv ../fft_16_4_out/sv/fft_16_4_out_if.sv
 RTL = ../rtl/*.sv
 TOP = top.sv
