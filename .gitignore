@@ -3,6 +3,7 @@ xcelium*
 cov_work/
 wave*/
 wave*
+*.vcd
 testing/
 notes.txt
 dump.vcd

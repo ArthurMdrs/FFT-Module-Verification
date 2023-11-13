@@ -32,8 +32,8 @@ class fft_16_4_in_random_seq extends fft_16_4_in_base_sequence;
     endfunction : new
     
     virtual task body();
-        `uvm_info("fft_16_4_in Sequence", "Executing random_seq.", UVM_LOW)
-        repeat(4*100) begin
+        `uvm_info("fft_16_4_in Sequence", "Executing random_seq.", UVM_NONE)
+        repeat(4*1000) begin
             `uvm_create(req)
                 void'(req.randomize());
                 // It is possible to put constraints into randomize, like below.
@@ -55,7 +55,7 @@ class fft_16_4_in_full_cov_seq extends fft_16_4_in_base_sequence;
     endfunction : new
     
     virtual task body();
-        `uvm_info("fft_16_4_in Sequence", "Executing full_cov_seq.", UVM_LOW)
+        `uvm_info("fft_16_4_in Sequence", "Executing full_cov_seq.", UVM_NONE)
         while(p_sequencer.coverage_value < 100) begin
             repeat (4) begin
                 `uvm_create(req)
@@ -80,7 +80,7 @@ class fft_16_4_around_0_seq extends fft_16_4_in_base_sequence;
     endfunction : new
     
     virtual task body();
-        `uvm_info("fft_16_4_in Sequence", "Executing around_0_seq.", UVM_LOW)
+        `uvm_info("fft_16_4_in Sequence", "Executing around_0_seq.", UVM_NONE)
         repeat(4*500) begin
             `uvm_create(req)
                 void'(req.randomize() with {
@@ -110,7 +110,7 @@ class fft_16_4_around_max_seq extends fft_16_4_in_base_sequence;
     endfunction : new
     
     virtual task body();
-        `uvm_info("fft_16_4_in Sequence", "Executing around_max_seq.", UVM_LOW)
+        `uvm_info("fft_16_4_in Sequence", "Executing around_max_seq.", UVM_NONE)
         repeat(4*500) begin
             `uvm_create(req)
                 void'(req.randomize() with {
@@ -140,7 +140,7 @@ class fft_16_4_around_min_seq extends fft_16_4_in_base_sequence;
     endfunction : new
     
     virtual task body();
-        `uvm_info("fft_16_4_in Sequence", "Executing around_min_seq.", UVM_LOW)
+        `uvm_info("fft_16_4_in Sequence", "Executing around_min_seq.", UVM_NONE)
         repeat(4*500) begin
             `uvm_create(req)
                 void'(req.randomize() with {
@@ -174,12 +174,35 @@ class fft_16_4_corners_seq extends fft_16_4_in_base_sequence;
     endfunction : new
     
     virtual task body();
-        `uvm_info("fft_16_4_in Sequence", "Executing corners_seq.", UVM_LOW)
+        `uvm_info("fft_16_4_in Sequence", "Executing corners_seq.", UVM_NONE)
         `uvm_do(seq_0);
         `uvm_do(seq_max);
         `uvm_do(seq_min);
     endtask : body
 
 endclass : fft_16_4_corners_seq
+
+//==============================================================//
+
+class fft_16_4_exhaustive_seq extends fft_16_4_in_base_sequence;
+//COVERAGE MUST BE ENABLED!!
+    fft_16_4_in_random_seq   seq_rnd;
+    fft_16_4_in_full_cov_seq seq_fullcov;
+    fft_16_4_corners_seq     seq_corners;
+
+    `uvm_object_utils(fft_16_4_exhaustive_seq)
+
+    function new(string name="fft_16_4_exhaustive_seq");
+        super.new(name);
+    endfunction : new
+    
+    virtual task body();
+        `uvm_info("fft_16_4_in Sequence", "Executing exhaustive_seq.", UVM_NONE)
+        `uvm_do(seq_rnd);
+        `uvm_do(seq_fullcov);
+        `uvm_do(seq_corners);
+    endtask : body
+
+endclass : fft_16_4_exhaustive_seq
 
 //==============================================================//

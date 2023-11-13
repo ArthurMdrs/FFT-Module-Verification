@@ -1,7 +1,7 @@
 CPP_FILE = fft_cpp
 
 UVMHOME = /Tools/cadence/XCELIUM2303/tools/methodology/UVM/CDNS-1.2
-TEST = corners_test
+TEST = exhaustive_test
 VERBOSITY = UVM_NONE
 
 INCDIRS = -incdir ../fft_16_4_in/sv -incdir ../fft_16_4_out/sv
