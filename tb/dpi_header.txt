@@ -12,8 +12,8 @@
 #endif 
 
 typedef struct { 
-	int _a0[32];
-} top__DpiStructGEN;
+	double _a0[32];
+ } top__DpiStructGEN;
 
 
 extern void cdns_tcl_uvm_objection (svBit _a1);

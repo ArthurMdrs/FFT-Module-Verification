@@ -12,8 +12,8 @@
 #endif 
 
 typedef struct { 
-	int _a0[32];
-} top__DpiStructGEN;
+	double _a0[32];
+ } top__DpiStructGEN;
 
 
 extern void fft_cpp (top__DpiStructGEN *_a1);

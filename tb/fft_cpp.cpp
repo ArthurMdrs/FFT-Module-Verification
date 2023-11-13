@@ -4,43 +4,39 @@
 using namespace std;
 
 /////////////////////////////////////////////////////////////////
-class complex_int {
+class complex_double {
     public:
-        int real;
-        int imag;
-    complex_int(int = 0, int = 0);
+        double real;
+        double imag;
+    complex_double(double = 0, double = 0);
 };
 
-complex_int::complex_int (int real, int imag){
+complex_double::complex_double (double real, double imag){
     this->real = real;
     this->imag = imag;
 }
 /////////////////////////////////////////////////////////////////
 
 typedef struct {
-    int array [16][2];
+    double array [16][2];
 } DpiStructGEN;
 
-void fft_aux (vector<complex_int> &, vector<complex_int> &);
+void fft_aux (vector<complex_double> &, vector<complex_double> &);
 
 extern "C" void fft_cpp (DpiStructGEN *dpiStruct) {    
-    vector<complex_int> vec_i;
-    vector<complex_int> vec_o;
+    vector<complex_double> vec_i;
+    vector<complex_double> vec_o;
 
     for (int i = 0; i < 16; i++){
-        complex_int a (dpiStruct->array[i][0], dpiStruct->array[i][1]);
+        complex_double a (dpiStruct->array[i][0], dpiStruct->array[i][1]);
         vec_i.push_back(a);
     }
 
     fft_aux(vec_i, vec_o);
-    
-    // for (int i = 0; i < 16; i++){
-    //     printf("input %8x, %8x\t\toutput %8x, %8x\n", vec_i[i].real, vec_i[i].imag, vec_o[i].real >> 3, vec_o[i].imag >> 3);
-    // }
 
     for (int i = 0; i < 16; i++){
-        dpiStruct->array[i][0] = vec_o[i].real >> 3;
-        dpiStruct->array[i][1] = vec_o[i].imag >> 3;
+        dpiStruct->array[i][0] = vec_o[i].real * pow(2.0, -3);
+        dpiStruct->array[i][1] = vec_o[i].imag * pow(2.0, -3);
     }
 
 }
@@ -48,17 +44,17 @@ extern "C" void fft_cpp (DpiStructGEN *dpiStruct) {
 
 
 // Based on https://cp-algorithms.com/algebra/fft.html
-void fft_aux (vector<complex_int> & P, vector<complex_int> & res) {
+void fft_aux (vector<complex_double> & P, vector<complex_double> & res) {
     int n = P.size();
-    res = vector<complex_int> (n);
+    res = vector<complex_double> (n);
     
     if (n == 1){
         res[0] = P[0];
         return;
     }
 
-    vector<complex_int> evens_i(n/2), odds_i(n/2);
-    vector<complex_int> evens_o(n/2), odds_o(n/2);
+    vector<complex_double> evens_i(n/2), odds_i(n/2);
+    vector<complex_double> evens_o(n/2), odds_o(n/2);
 
     for (int i = 0; 2 * i < n; i++) {
         evens_i[i] = P[2*i];
@@ -76,22 +72,6 @@ void fft_aux (vector<complex_int> & P, vector<complex_int> & res) {
       res[i+n/2].real = evens_o[i].real - cos(i*theta)*odds_o[i].real + sin(i*theta)*odds_o[i].imag;
       res[i+n/2].imag = evens_o[i].imag - sin(i*theta)*odds_o[i].real - cos(i*theta)*odds_o[i].imag;
     }
-
-// DEBUG BELOW!!!
-// if(n == 4) {
-//     printf("MOD n is %0d\n", n);
-//     printf("theta is %f\n", theta);
-//     // for (int i = 0; i < n/2; i++){
-//     //     printf("\ncos, sin is %0d, %0d\n", int(cos(theta*i)), int(sin(theta*i)));
-//     //     printf("theta*i is %f\n", theta*i);
-//     //     complex_int x (int(cos(theta*i)), int(sin(theta*i))), y;
-//     //     y = mult(odds_o[i], x);
-//     //     printf("w is %0d, %0d\n\n", y.real, y.imag);
-//     // }
-//     for (int i = 0; i < n; i++){
-//         printf("MOD res is %0d, %0d\n", res[i].real, res[i].imag);
-//     }
-// }
 
     return;
 }
