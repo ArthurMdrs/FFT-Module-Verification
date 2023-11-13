@@ -83,3 +83,24 @@ class full_cov_test extends base_test;
 endclass: full_cov_test
 
 //==============================================================//
+
+class corners_test extends base_test;
+
+    `uvm_component_utils(corners_test)
+
+    function new(string name, uvm_component parent);
+        super.new(name, parent);
+    endfunction: new
+
+    function void build_phase(uvm_phase phase);
+        super.build_phase(phase);
+
+        // Sequences config - begin
+        uvm_config_wrapper::set(this, "tb.agent_fft_16_4_in.sequencer.run_phase", "default_sequence", fft_16_4_corners_seq::get_type());
+        // Sequences config - end
+        
+    endfunction: build_phase
+
+endclass: corners_test
+
+//==============================================================//

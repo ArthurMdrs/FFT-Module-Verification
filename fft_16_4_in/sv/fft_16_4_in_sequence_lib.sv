@@ -32,6 +32,7 @@ class fft_16_4_in_random_seq extends fft_16_4_in_base_sequence;
     endfunction : new
     
     virtual task body();
+        `uvm_info("fft_16_4_in Sequence", "Executing random_seq.", UVM_LOW)
         repeat(4*100) begin
             `uvm_create(req)
                 void'(req.randomize());
@@ -53,7 +54,8 @@ class fft_16_4_in_full_cov_seq extends fft_16_4_in_base_sequence;
         super.new(name);
     endfunction : new
     
-    virtual task body();        
+    virtual task body();
+        `uvm_info("fft_16_4_in Sequence", "Executing full_cov_seq.", UVM_LOW)
         while(p_sequencer.coverage_value < 100) begin
             repeat (4) begin
                 `uvm_create(req)
@@ -66,5 +68,118 @@ class fft_16_4_in_full_cov_seq extends fft_16_4_in_base_sequence;
     endtask : body
 
 endclass : fft_16_4_in_full_cov_seq
+
+//==============================================================//
+
+class fft_16_4_around_0_seq extends fft_16_4_in_base_sequence;
+
+    `uvm_object_utils(fft_16_4_around_0_seq)
+
+    function new(string name="fft_16_4_around_0_seq");
+        super.new(name);
+    endfunction : new
+    
+    virtual task body();
+        `uvm_info("fft_16_4_in Sequence", "Executing around_0_seq.", UVM_LOW)
+        repeat(4*500) begin
+            `uvm_create(req)
+                void'(req.randomize() with {
+                    i_data_1_real < 10 && i_data_1_real > -10;
+                    i_data_1_imag < 10 && i_data_1_imag > -10;
+                    i_data_2_real < 10 && i_data_2_real > -10;
+                    i_data_2_imag < 10 && i_data_2_imag > -10;
+                    i_data_3_real < 10 && i_data_3_real > -10;
+                    i_data_3_imag < 10 && i_data_3_imag > -10;
+                    i_data_4_real < 10 && i_data_4_real > -10;
+                    i_data_4_imag < 10 && i_data_4_imag > -10;
+                });
+            `uvm_send(req)
+        end
+    endtask : body
+
+endclass : fft_16_4_around_0_seq
+
+//==============================================================//
+
+class fft_16_4_around_max_seq extends fft_16_4_in_base_sequence;
+
+    `uvm_object_utils(fft_16_4_around_max_seq)
+
+    function new(string name="fft_16_4_around_max_seq");
+        super.new(name);
+    endfunction : new
+    
+    virtual task body();
+        `uvm_info("fft_16_4_in Sequence", "Executing around_max_seq.", UVM_LOW)
+        repeat(4*500) begin
+            `uvm_create(req)
+                void'(req.randomize() with {
+                    8'h7f - i_data_1_real < 10;
+                    8'h7f - i_data_1_imag < 10;
+                    8'h7f - i_data_2_real < 10;
+                    8'h7f - i_data_2_imag < 10;
+                    8'h7f - i_data_3_real < 10;
+                    8'h7f - i_data_3_imag < 10;
+                    8'h7f - i_data_4_real < 10;
+                    8'h7f - i_data_4_imag < 10;
+                });
+            `uvm_send(req)
+        end
+    endtask : body
+
+endclass : fft_16_4_around_max_seq
+
+//==============================================================//
+
+class fft_16_4_around_min_seq extends fft_16_4_in_base_sequence;
+
+    `uvm_object_utils(fft_16_4_around_min_seq)
+
+    function new(string name="fft_16_4_around_min_seq");
+        super.new(name);
+    endfunction : new
+    
+    virtual task body();
+        `uvm_info("fft_16_4_in Sequence", "Executing around_min_seq.", UVM_LOW)
+        repeat(4*500) begin
+            `uvm_create(req)
+                void'(req.randomize() with {
+                    i_data_1_real - 8'h10 < 10;
+                    i_data_1_imag - 8'h10 < 10;
+                    i_data_2_real - 8'h10 < 10;
+                    i_data_2_imag - 8'h10 < 10;
+                    i_data_3_real - 8'h10 < 10;
+                    i_data_3_imag - 8'h10 < 10;
+                    i_data_4_real - 8'h10 < 10;
+                    i_data_4_imag - 8'h10 < 10;
+                });
+            `uvm_send(req)
+        end
+    endtask : body
+
+endclass : fft_16_4_around_min_seq
+
+//==============================================================//
+
+class fft_16_4_corners_seq extends fft_16_4_in_base_sequence;
+
+    fft_16_4_around_0_seq   seq_0;
+    fft_16_4_around_max_seq seq_max;
+    fft_16_4_around_min_seq seq_min;
+
+    `uvm_object_utils(fft_16_4_corners_seq)
+
+    function new(string name="fft_16_4_corners_seq");
+        super.new(name);
+    endfunction : new
+    
+    virtual task body();
+        `uvm_info("fft_16_4_in Sequence", "Executing corners_seq.", UVM_LOW)
+        `uvm_do(seq_0);
+        `uvm_do(seq_max);
+        `uvm_do(seq_min);
+    endtask : body
+
+endclass : fft_16_4_corners_seq
 
 //==============================================================//
